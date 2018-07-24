@@ -1,24 +1,25 @@
 /*
- * Create a list that holds all of your cards
+ * List of cards
  */
-const iconsList = ["fa fa-diamond", "fa fa-diamond",
-"fa fa-paper-plane-o", "fa fa-paper-plane-o",
-"fa fa-anchor", "fa fa-anchor",
-"fa fa-bolt", "fa fa-bolt",
-"fa fa-cube", "fa fa-cube",
-"fa fa-leaf", "fa fa-leaf",
-"fa fa-bicycle", "fa fa-bicycle",
-"fa fa-bomb", "fa fa-bomb"];
+// const iconsList = ["fa fa-diamond", "fa fa-diamond",
+// "fa fa-paper-plane-o", "fa fa-paper-plane-o",
+// "fa fa-anchor", "fa fa-anchor",
+// "fa fa-bolt", "fa fa-bolt",
+// "fa fa-cube", "fa fa-cube",
+// "fa fa-leaf", "fa fa-leaf",
+// "fa fa-bicycle", "fa fa-bicycle",
+// "fa fa-bomb", "fa fa-bomb"];
 
+const iconsList = ["fa fa-diamond", "fa fa-diamond"];
+
+//Select the parent and append children to the parent in order to see the cards
 const cardsContainer = document.querySelector(".deck");
-//we need to select the parent and append children to the parent in order to see the cards
 
-// need to save opened cards in an array and compare them
-
+// Save opened cards in an array and compare them
 let openedCards = [];
 let matchedCards = [];
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+// Card shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length;
 
@@ -29,27 +30,25 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
-
 
 /*
 * Initialise the game
 */
 
-//create the cards: loop over the array. The counter helps to create cards based on how many icons we have.
+//Create the cards to loop over the array. The counter helps to create cards based on how many icons we have.
 function init() {
   const icons = shuffle(iconsList);
 
   for(let i = 0; i < icons.length; i++){
     const card = document.createElement("li");
-    card.classList.add("card"); //HTMK has card class
-    card.innerHTML = `<i class="${icons[i]}"> </i>`; // <-- new JS --> old JS "<i class='" + icons[i] + "'</i>"//loops over the icons and pick one at a time
+    card.classList.add("card"); //HTML has card class
+    card.innerHTML = `<i class="${icons[i]}"> </i>`; //loops over the icons and picks one at a time
     //card.innerHTML = "<i class='"+ icons[i] +"'</i>";
     cardsContainer.appendChild(card); //parent/child append. Adding card as an argument
 
-    // add click event to each card
+    // Add click event to each card
     click(card);
   }
 }
@@ -58,14 +57,14 @@ function init() {
   * Click event
   */
 
-  // first click event
+  // First click event
 let isFirstClick = true;
 //why placing this in click(card) function made the time go weird and not stop
 
 function click(card){
 
 
-  // card click event, going to select each card and apply event listener to the card
+// card click event, going to select each card and apply event listener to the card
 //because we're still in the same loop it will be applied to all cards here
   card.addEventListener("click", function() {
 
@@ -214,6 +213,8 @@ let liveTimer,
 
 //set default value to the timer's container
 
+
+
 timerContainer.innerHTML = minute + " min " + second + " secs";
 /*
  * We call this function to start our function,
@@ -340,6 +341,7 @@ span2.onclick = function() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
+//TODO
 window.onclick = function(event) {
     if (event.target == gameOverModal) {
         gameOverModal.style.display = "none";
@@ -348,10 +350,9 @@ window.onclick = function(event) {
 
 function gameOverMessage() {
   gameOverModal.style.display = "block";
-  container.style.display = "none"; //make container deck dissapear from the screen
-  stars[1].innerHTML = starsContainer[0].innerHTML;
-  timer[1].innerHTML = timerContainer[0].innerHTML;
-  console.log ("game over");
+  //cardsContainer.style.display = "none"; //make container deck dissapear from the screen
+  const finalTimer = document.querySelector(".finalTimer");
+  finalTimer.innerHTML = timerContainer.innerHTML; 
 
 }
 
