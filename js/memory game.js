@@ -1,16 +1,16 @@
 /*
  * List of cards
  */
-// const iconsList = ["fa fa-diamond", "fa fa-diamond",
-// "fa fa-paper-plane-o", "fa fa-paper-plane-o",
-// "fa fa-anchor", "fa fa-anchor",
-// "fa fa-bolt", "fa fa-bolt",
-// "fa fa-cube", "fa fa-cube",
-// "fa fa-leaf", "fa fa-leaf",
-// "fa fa-bicycle", "fa fa-bicycle",
-// "fa fa-bomb", "fa fa-bomb"];
+const iconsList = ["fa fa-diamond", "fa fa-diamond",
+"fa fa-paper-plane-o", "fa fa-paper-plane-o",
+"fa fa-anchor", "fa fa-anchor",
+"fa fa-bolt", "fa fa-bolt",
+"fa fa-cube", "fa fa-cube",
+"fa fa-leaf", "fa fa-leaf",
+"fa fa-bicycle", "fa fa-bicycle",
+"fa fa-bomb", "fa fa-bomb"];
 
-const iconsList = ["fa fa-diamond", "fa fa-diamond"];
+//const iconsList = ["fa fa-diamond", "fa fa-diamond"];
 
 //Select the parent and append children to the parent in order to see the cards
 const cardsContainer = document.querySelector(".deck");
@@ -258,15 +258,24 @@ function startTimer() {
  * Restart button
  */
 
-const restartBtn = document.querySelector(".restart");
-restartBtn.addEventListener("click", function(){
-// delete all cards
-cardsContainer.innerHTML = "";
-// call "init" to create new cards
-init();
-// reset the Game
-reset();
-});
+const restartBtn = document.querySelectorAll(".restart");
+
+for (var i = 0; i < restartBtn.length; i++) {
+  restartBtn[i].addEventListener("click", function(){
+
+
+    console.log("This is code to remove the modal");
+    gameOverModal.style.display = "none";
+  // delete all cards
+  cardsContainer.innerHTML = "";
+  // call "init" to create new cards
+  init();
+  // reset the Game
+  reset();
+  });
+}
+
+
 
 /*
 * reset all variables
@@ -341,10 +350,9 @@ span2.onclick = function() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-//TODO
 window.onclick = function(event) {
-    if (event.target == gameOverModal) {
-        gameOverModal.style.display = "none";
+    if (event.target == modal) {
+        modal.style.display = "none"
     }
 }
 
@@ -352,7 +360,10 @@ function gameOverMessage() {
   gameOverModal.style.display = "block";
   //cardsContainer.style.display = "none"; //make container deck dissapear from the screen
   const finalTimer = document.querySelector(".finalTimer");
-  finalTimer.innerHTML = timerContainer.innerHTML; 
+  finalTimer.innerHTML = timerContainer.innerHTML;
+
+  const finalStars = document.querySelector(".finalStars");
+  finalStars.innerHTML = starsContainer.innerHTML;
 
 }
 
