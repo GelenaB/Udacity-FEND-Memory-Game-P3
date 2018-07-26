@@ -2,19 +2,19 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Game Overview](#game overview)
+* [Acknowledgements](#acknowledgements)
 
-## Instructions
+## Game Overview
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The deck contains 16 cards, 8 of which are identical. Your task is to flip, memorise and match identical cards with the lowest amount of moves possible.
 
-To get started, open `js/app.js` and start building out the app's functionality
+You start off with 3 stars. The number of stars will start gradually decreasing if you're making too many moves without matching cards.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Acknowledgements
 
-## Contributing
+This is my first complex project that is heavily dependent on JavaScript.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+The started code was provided by Udacity: https://github.com/udacity/fend-project-memory-game
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Udacity's online community was a massive help and one of the students Yayha Elharony recorded an amazing explanation of how to tackle the JS logic behind the game. His webinar is available here: https://www.youtube.com/watch?v=G8J13lmApkQ&feature=youtu.be&t=9
