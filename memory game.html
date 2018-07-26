@@ -9,36 +9,33 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="css/memory game.css">
 </head>
-<body>
 
+<body>
     <div class="container">
         <header>
             <h1>Memory Game</h1>
         </header>
 
-        <section class="instructionsModal">
-          <!-- Trigger/Open The Modal -->
-            <button id="myBtn">How to Play</button>
+          <!-- Trigger/Open The How to Play Modal -->
+            <button id="howToPlayBtn">How to Play</button>
 
-          <!-- The Modal -->
-            <div id="myModal" class="modal">
+          <!-- The How to Play Game Modal -->
+            <div id="howToPlayModalId" class="howToPlayModal">
 
-          <!-- Modal content -->
-              <div class="modal-content">
+          <!-- How to Play Game Modal content -->
+              <div class="howToPlayModalContent">
                 <span class="close">&times;</span>
-
                   <h3>About the Game</h3>
                     <p>Memory Game contains a deck of 16 cards shuffled in a random order, 8 of which are identical. Your task is to find and match these identical cards with the least amount of moves possible.</p>
                   <h3>Score Rating</h3>
                     <p>Three stars: up to 15 moves</p>
                     <p>Two stars: 16-24 moves</p>
                     <p>One star: over 25 moves</p>
-
               </div>
             </div>
           </section>
 
-        <section class="score-panel">
+        <section class="scorePanel">
         	<ul class="stars">
           </ul>
         	<span class="moves"></span> Moves -
@@ -48,25 +45,22 @@
         	</span>
         </section>
 
+        <!-- Card Deck -->
         <ul class="deck">
         </ul>
 
-        <!-- The Modal -->
+        <!-- The Game Over Modal -->
           <div id="gameOverModal" class="gameOverModal">
 
-        <!-- Modal content -->
+        <!-- The Game Over Modal content -->
             <div class="gameOverMessage">
               <span class="closeModal">&times;</span>
-
                 <h2>Congratulations!</h2>
                 <p> You won!</p>
                 <ul class="finalStars">
                   </ul>
-
                 <span class="finalTimer"></span>
-
                 <span class="restart"> Play Again?
-
             </div>
           </div>
     </div>

@@ -1,6 +1,7 @@
 /*
  * List of cards
  */
+
 const iconsList = ["fa fa-diamond", "fa fa-diamond",
 "fa fa-paper-plane-o", "fa fa-paper-plane-o",
 "fa fa-anchor", "fa fa-anchor",
@@ -10,12 +11,11 @@ const iconsList = ["fa fa-diamond", "fa fa-diamond",
 "fa fa-bicycle", "fa fa-bicycle",
 "fa fa-bomb", "fa fa-bomb"];
 
-//const iconsList = ["fa fa-diamond", "fa fa-diamond"];
+// const iconsList = ["fa fa-diamond", "fa fa-diamond"]; // Uncomment for testing purposes
 
-//Select the parent and append children to the parent in order to see the cards
 const cardsContainer = document.querySelector(".deck");
 
-// Save opened cards in an array and compare them
+// Opened cards are saved in an array, and will later be compared
 let openedCards = [];
 let matchedCards = [];
 
@@ -37,150 +37,100 @@ function shuffle(array) {
 * Initialise the game
 */
 
-//Create the cards to loop over the array. The counter helps to create cards based on how many icons we have.
+// Creates cards by looping over the iconsList array. The counter helps to create cards based on how many icons we have
 function init() {
   const icons = shuffle(iconsList);
 
-  for(let i = 0; i < icons.length; i++){
+  for(let i = 0; i < icons.length; i++) {
     const card = document.createElement("li");
-    card.classList.add("card"); //HTML has card class
-    card.innerHTML = `<i class="${icons[i]}"> </i>`; //loops over the icons and picks one at a time
-    //card.innerHTML = "<i class='"+ icons[i] +"'</i>";
-    cardsContainer.appendChild(card); //parent/child append. Adding card as an argument
-
-    // Add click event to each card
-    click(card);
+    card.classList.add("card");
+    card.innerHTML = `<i class="${icons[i]}"> </i>`; // Loops over the icons and picks one at a time
+    cardsContainer.appendChild(card); // Parent/child append. Adding card as an argument
+    click(card); // Adds click event to each card (function below)
   }
 }
 
-  /*
-  * Click event
-  */
-
-  // First click event
-let isFirstClick = true;
-//why placing this in click(card) function made the time go weird and not stop
-
-function click(card){
-
-
-// card click event, going to select each card and apply event listener to the card
-//because we're still in the same loop it will be applied to all cards here
-  card.addEventListener("click", function() {
-
 /*
-* first click set the condition to true
-* will call startTimer function
-* then we're setting the isFirstClick to false to after the next click
-* it will be if(false) and nothing will happen
+* The click event
 */
 
-if(isFirstClick) {
-  //start start
-  startTimer();
-  //change isFirstClick indicator's value
-  isFirstClick = false;
-}
+let isFirstClick = true; // First click event
+
+function click(card) {
+    // When going through the loop, will apply event listener to each card
+    card.addEventListener("click", function() {
+      // First click sets the condition to true, then we call startTimer function
+      // We then set the isFirstClick to false
+      if(isFirstClick) {
+        startTimer();
+        isFirstClick = false;
+      }
     const currentCard = this;
     const previousCard = openedCards[0];
-    // we have an existing OPENED card
-    if(openedCards.length === 1) {
-// only applies match class to two cards, it compares to the first child, so we need to reset the array
+    if(openedCards.length === 1) { // Only applies match class to two cards, it compares to the first child, so we need to reset the array
+    card.classList.add("open", "show", "disable"); // Links to CSS classes
+    openedCards.push(this); // Pushes open cards into an empty array; this is reffered to a card which has the event listener from the beginning
 
-        // need card flipping, links to CSS classes
-        card.classList.add("open", "show", "disable");
-        // this is pushing open cards into an empty array
-        openedCards.push(this); // this reffered to card. the one with event listener at the beginning
-
-        // compare two opened cards
-        compare(currentCard, previousCard);
-
-
-    } else {
-      //we don't have any opened cards
-        // need card flipping, links to CSS classes
-        card.classList.add("open", "show", "disable");
-        // this is pushing open cards into an empty array
-        openedCards.push(this); // this reffered to card. the one with event listener at the beginning
-    }
-  });
+    compare(currentCard, previousCard); // Compare two opened cards
+      } else {
+          card.classList.add("open", "show", "disable");
+          openedCards.push(this);
+        }
+    });
 }
 
 /*
 * Compare the 2 cards
 */
 
-function compare(currentCard, previousCard){
-//matcher
-
-  //we should compare our 2 opened cards
-  // this is the 2nd last clicked element.openedCards[0] is the first element as we saved it before
-  if(currentCard.innerHTML === previousCard.innerHTML){
+function compare(currentCard, previousCard) {
+  // Compares 2 opened cards
+  // This is the 2nd last clicked element.openedCards[0] is the first element as we saved it before
+  if(currentCard.innerHTML === previousCard.innerHTML) {
 
     currentCard.classList.add("match");
-    previousCard.classList.add("match");
-    //CSS match class
-
+    previousCard.classList.add("match"); // CSS match class
     matchedCards.push(currentCard, previousCard);
-
     openedCards = [];
-    //check if the game is over
-    isOver();
+    isOver(); // Check if the game is over
 
-  } else {
-    //wait 500ms before performing an action
-    setTimeout(function(){
-      //if don't match need to remove open and show class
-      currentCard.classList.remove("open", "show", "disable");
-      previousCard.classList.remove("open", "show", "disable");
-
-    }, 500);
-  openedCards = [];
-  }
-
-  //add moves
-  addMove();
+    } else { // Wait 500ms before performing an action
+        setTimeout(function() {
+      // If cards don't match need to remove open and show class
+        currentCard.classList.remove("open", "show", "disable");
+        previousCard.classList.remove("open", "show", "disable");
+      }, 500);
+      openedCards = [];
+    }
+  addMove(); // Add moves
 }
 
 /*
-* check if the game is over
+* Check if the game is over
 */
 
-function isOver(){
+function isOver() {
   if(matchedCards.length === iconsList.length) {
-// stop timer
     stopTimer();
-
-    /*
-     * Display your popup here, the `alert` is for explanation only!
-     *
-     * In your popup, you should create a button,
-     * To let the user play a new game
-     *
-     * After clicking on that button, you should:
-     *  - Call the `init` function to re-create the cards
-     *  - Call the `reset` function to reset all variables
-     */
     gameOverMessage();
   }
 }
 
 /*
- * add move
+ * Add moves
  */
+
 const movesContainer = document.querySelector(".moves");
 let moves = 0;
 movesContainer.innerHTML = 0;
 function addMove() {
   moves ++;
   movesContainer.innerHTML = moves;
-
-  // set the rating
-  rating();
+  rating(); // Set the rating
 }
 
 /*
- * rating
+ * Rating
  */
 
 const starsContainer = document.querySelector(".stars");
@@ -211,48 +161,23 @@ let liveTimer,
     second = 0,
     minute = 0;
 
-//set default value to the timer's container
+timerContainer.innerHTML = minute + " min " + second + " secs"; // Sets default value to timer's container
 
-
-
-timerContainer.innerHTML = minute + " min " + second + " secs";
-/*
- * We call this function to start our function,
- * the totalSeconds will be increased
- * by 1 after 1000ms (1 second!)
- *
- * HINT: We need to call this function ONCE, and the best time to call it
- * is when the user click on a card (The first card!)
- * This means that our user is start playing now! ;)
- */
-
+// The function is called once the user clicks on the first card
 function startTimer() {
   liveTimer = setInterval(function(){
   timerContainer.innerHTML = minute + " min " + second + " secs";
-//increase the totalSeconds by 1
-    second++;
+    second++; // Increases the totalSeconds by 1 + updates HTML contaioner with new time
     if (second === 60) {
       minute++;
       second = 0;
     }
-    //update html container with the new time
-
   }, 1000);
 }
 
-/*
- * Our timer won't stop. To stop it, we should clearInterval!
- * We will call it when the game is over.
- * So, we will call it at the end of `isOver` function
- *
- * HINT: That's why I created the `liveTimer` variable,
- * to store the setInterval's function, so that we can stop it by its name!
- */
-
- function stopTimer() {
+ function stopTimer() { // When the game is over, the timer will be stopped as it's being called at the of isOver function
    clearInterval(liveTimer);
  }
-
 
 /*
  * Restart button
@@ -262,59 +187,47 @@ const restartBtn = document.querySelectorAll(".restart");
 
 for (var i = 0; i < restartBtn.length; i++) {
   restartBtn[i].addEventListener("click", function(){
-
-
-    console.log("This is code to remove the modal");
+    console.log("This is code to remove the modal"); // Test
     gameOverModal.style.display = "none";
-  // delete all cards
-  cardsContainer.innerHTML = "";
-  // call "init" to create new cards
-  init();
-  // reset the Game
-  reset();
+    cardsContainer.innerHTML = ""; // Deletes all cards
+    init();   // Call "init" to create new cards
+    reset(); // Reset the Game
   });
 }
 
-
-
 /*
-* reset all variables
+* Reset all variables
 */
-function reset(){
 
-// reset any related variables
-matchedCards = [];
-moves = 0;
-movesContainer.innerHTML = moves;
-starsContainer.innerHTML = `
-  <li> <i class="fa fa-star"></i></li>
-  <li><i class="fa fa-star"></i></li>
-  <li><i class="fa fa-star"></i></li>`
-  /*
-       * Reset the `timer`
-       *
-       * - Stop it first
-       * - Then, reset the `isFirstClick` to `true` to be able to start the timer again!
-       * - Don't forget about `totalSeconds`, it must be `0`
-       * - One more thing, is to update the HTML timer's container
-       */
-      stopTimer();
-      isFirstClick = true;
-      second = 0;
-      timerContainer.innerHTML = minute + " min " + second + " secs";
+function reset() { // Reset any related variables
+  matchedCards = [];
+  moves = 0;
+  movesContainer.innerHTML = moves;
+  starsContainer.innerHTML = `
+    <li> <i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`
 
+  stopTimer(); // Stop the timer first, reset "isFirstClick" to "true", update HTML container
+  isFirstClick = true;
+  second = 0;
+  timerContainer.innerHTML = minute + " min " + second + " secs";
 }
 
-// start the game for the first time
+/*
+* Start the game for the first time
+*/
+
 init();
 
+/*
+* How to Play the Game Modal
+*/
 
-
-// Get the modal
-const modal = document.getElementById('myModal');
+const modal = document.getElementById('howToPlayModalId');
 
 // Get the button that opens the modal
-const btn = document.getElementById("myBtn");
+const btn = document.getElementById("howToPlayBtn");
 
 // Get the <span> element that closes the modal
 const span = document.getElementsByClassName("close")[0];
@@ -331,18 +244,19 @@ span.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == howToPlayModal) {
         modal.style.display = "none";
     }
 }
-/////////////////////////
+
+/*
+* Game Over Modal
+*/
 
 const gameOverModal = document.getElementById('gameOverModal');
 
-
 // Get the <span> element that closes the modal
 const span2 = document.getElementsByClassName("closeModal")[0];
-
 
 // When the user clicks on <span> (x), close the modal
 span2.onclick = function() {
@@ -356,6 +270,10 @@ window.onclick = function(event) {
     }
 }
 
+/*
+* Game Over Message
+*/
+
 function gameOverMessage() {
   gameOverModal.style.display = "block";
   //cardsContainer.style.display = "none"; //make container deck dissapear from the screen
@@ -366,34 +284,3 @@ function gameOverMessage() {
   finalStars.innerHTML = starsContainer.innerHTML;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */

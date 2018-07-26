@@ -1,3 +1,7 @@
+/*
+ * Overall CSS
+ */
+
 html {
     box-sizing: border-box;
 }
@@ -83,33 +87,32 @@ h1 {
 }
 
 .deck .card.disable{
-  pointer-events: none;
-  //disabled click events
+    pointer-events: none; //disables click events
 }
 
 /*
- * Styles for the Score Panel
+ * Styles for the Score Panel + Similar Game Over Modal Elements
  */
 
-.score-panel {
+.scorePanel {
     text-align: left;
     width: 400px;
     margin-bottom: 10px;
 }
 
-.score-panel .stars, .finalStars {
+.scorePanel .stars, .finalStars {
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
     color: #404c47;
 }
 
-.score-panel .stars li, .finalStars li {
+.scorePanel .stars li, .finalStars li {
     list-style: none;
     display: inline-block;
 }
 
-.score-panel .restart {
+.scorePanel .restart {
     float: right;
     cursor: pointer;
 }
@@ -119,24 +122,30 @@ h1 {
     cursor: pointer;
 }
 
-
-
-
-/* The Modal (background) */
-
-#myBtn{
-font-size: 13px;
-font-weight: bold;
-margin: 0 0 20px 0;
-padding: 10px;
-border-radius: 10px;
-color: #ffffff;
-background-color: #65BFBC;
+.finalTimer {
+    background-color: #ffffff;
+    display: block;
+    font-size: 13px;
+    padding: 10px 0 10px 0;
 }
 
-.modal {
+/*
+ * How to Play Modal
+ */
+
+#howToPlayBtn{
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: #65BFBC;
+  }
+
+.howToPlayModal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
+    position: fixed; /* Stays in place */
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
@@ -147,9 +156,8 @@ background-color: #65BFBC;
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #ffffff;
+.howToPlayModalContent {
+    background-color: #ffffff;
     font-size: 13px;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -158,21 +166,9 @@ background-color: #65BFBC;
     width: 60%; /* Could be more or less, depending on screen size */
 }
 
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+/*
+ * Game Over Modal
+ */
 
 .gameOverModal {
     display: none; /* Hidden by default */
@@ -187,9 +183,8 @@ background-color: #65BFBC;
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
 .gameOverMessage {
-  background-color: #ffffff;
+    background-color: #ffffff;
     display: block;
     text-align: left;
     font-size: 13px;
@@ -200,16 +195,26 @@ background-color: #65BFBC;
     width: 60%; /* Could be more or less, depending on screen size */
 }
 
-/* Modal Content/Box */
-.finalTimer {
-  background-color: #ffffff;
-    display: block;
-    font-size: 13px;
-    padding: 10px 0 10px 0;
+/* Modals Close Buttons */
+.close, .closeModal{
+    color: #aaa;
+    background: #3498db;
+    float: right;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 4px;
 }
 
-
-
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .closeModal:hover,
 .closeModal:focus {
@@ -218,76 +223,29 @@ background-color: #65BFBC;
     cursor: pointer;
 }
 
-
-
-
-
-
-.gameOverModalContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #e74c3c;
-  font-size: 20px;
-  color: white;
-  padding: 10px 30px;
-  cursor: pointer;
-}
-
-.gameOverBox {
-  width: 500px;
-  overflow: hidden;
-  background: #f1f1f1;
-  box-shadow: 0 0 20px black;
-  border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  padding: 10px;
-  text-align: center;
-  display: none;
-}
-
-.gameOverBox span{
-  color: #2ecc71;
-  font-size; 40px;
-  display: block;
-  margin: 20px 0;
-}
-
-.gameOverBox h1{
-  color: #333;
-}
-
-.close{
-  font-size: 18px;
-  color: white;
-  padding: 10px 20px;
-  cursor: pointer;
-  background: #3498db;
-  display: inline-block;
-  border-radius: 4px
-}
-
-.closeModal{
-  float: right;
-  font-size: 18px;
-  color: white;
-  padding: 10px 20px;
-  cursor: pointer;
-  background: #3498db;
-  display: inline-block;
-  border-radius: 4px
-}
-
 /* Responsive */
 
+@media only screen and (max-width: 370px) {
+    .scorePanel {
+        font-size: 12px;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    h2 {
+      font-size: 13px;
+    }
+
+    .close, .closeModal{
+        font-size: 15px;
+        padding: 5px 10px;
+    }
+}
 
 @media only screen and (max-width: 650px) {
-    .score-panel {
+    .scorePanel {
         width: 90%;
     }
 
@@ -305,7 +263,7 @@ background-color: #65BFBC;
 
 
 @media only screen and (min-width: 1000px) {
-    .score-panel, .modal-content, #myBtn {
+    .scorePanel, .howToPlayModalContent, #howToPlayBtn {
         font-size: 18px;
     }
 }
